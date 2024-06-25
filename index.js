@@ -65,7 +65,7 @@ try {
     bomPayload.parentVersion = parentVersion;
   }
 
-  core.info(bomPayload.stringify());
+  core.info(JSON.stringify(bomPayload));
 
   bomPayload.bom = encodedBomContents;
 
