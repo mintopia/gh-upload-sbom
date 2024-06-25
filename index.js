@@ -51,12 +51,10 @@ try {
       projectName: projectName,
       projectVersion: projectVersion,
       autoCreate: autoCreate,
-      bom: encodedBomContents
     }
   } else {
     bomPayload = {
       project: project,
-      bom: encodedBomContents
     }
   }
 
@@ -66,6 +64,10 @@ try {
     bomPayload.parentName = parentName;
     bomPayload.parentVersion = parentVersion;
   }
+
+  core.info(bomPayload.stringify());
+
+  bomPayload.bom = encodedBomContents;
 
   const postData = JSON.stringify(bomPayload);
 
