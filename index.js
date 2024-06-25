@@ -61,7 +61,7 @@ try {
   }
 
   if (parent && parent.trim().length > 0) {
-    bomPayload.parent = parent;
+    bomPayload.parentUUID = parent;
   } else if (parentName && parentName.trim().length > 0 && parentVersion && parentVersion.trim().length > 0) {
     bomPayload.parentName = parentName;
     bomPayload.parentVersion = parentVersion;
@@ -88,19 +88,22 @@ try {
     core.info('Response status code:', res.statusCode);
     if (res.statusCode >= 200 && res.statusCode < 300) {
       core.info('Finished uploading BOM to Dependency-Track server.')
+      process.exit()
     } else {
       core.setFailed('Failed response status code:' + res.statusCode);
+      process.exit()
     }
   });
 
   req.on('error', (e) => {
     core.error(`Problem with request: ${e.message}`);
     core.setFailed(e.message);
+    process.exit()
   });
 
   req.write(postData);
   req.end();
-
 } catch (error) {
   core.setFailed(error.message);
+  process.exit()
 }
