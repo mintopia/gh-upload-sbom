@@ -93,7 +93,7 @@ try {
         core.info('Finished uploading BOM to Dependency-Track server.')
         process.exit()
       } else {
-        core.error(data)
+        core.error('' + data)
         core.setFailed('Failed response status code:' + res.statusCode)
         process.exit()
       }
