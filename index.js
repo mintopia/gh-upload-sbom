@@ -92,13 +92,16 @@ try {
       core.info('Finished uploading BOM to Dependency-Track server.')
       process.exit()
     } else {
-      core.setFailed('Failed response status code:' + res.statusCode);
+      res.on('data', (data) => {
+        core.error(data)
+      })
+      core.setFailed('Failed response status code:' + res.statusCode)
       process.exit()
     }
   });
 
   req.on('error', (e) => {
-    core.error(`Problem with request: ${e.message}`);
+    core.error(`Problem with request: ${e.message}`)
     core.setFailed(e.message);
     process.exit()
   });
@@ -106,6 +109,6 @@ try {
   req.write(postData);
   req.end();
 } catch (error) {
-  core.setFailed(error.message);
+  core.setFailed(error.message)
   process.exit()
 }
