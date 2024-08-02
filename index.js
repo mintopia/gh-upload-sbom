@@ -88,17 +88,17 @@ try {
 
   const req = client.request(requestOptions, (res) => {
     core.info('Response status code:', res.statusCode);
-    if (res.statusCode >= 200 && res.statusCode < 300) {
-      core.info('Finished uploading BOM to Dependency-Track server.')
-      process.exit()
-    } else {
-      res.on('data', (data) => {
+    res.on('data', (data) => {
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        core.info('Finished uploading BOM to Dependency-Track server.')
+        process.exit()
+      } else {
         core.error(data)
-      })
-      core.setFailed('Failed response status code:' + res.statusCode)
-      process.exit()
-    }
-  });
+        core.setFailed('Failed response status code:' + res.statusCode)
+        process.exit()
+      }
+    })
+  })
 
   req.on('error', (e) => {
     core.error(`Problem with request: ${e.message}`)
