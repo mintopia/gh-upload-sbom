@@ -101,6 +101,8 @@ try {
   })
 
   req.on('error', (e) => {
+    console.log(e)
+    core.error(e)
     core.error(`Problem with request: ${e.message}`)
     core.setFailed(e.message);
     process.exit()
